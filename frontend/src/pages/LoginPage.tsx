@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthLayout } from "@/components/layout/AuthLayout";
+import { LockIcon, MailIcon } from "@/components/layout/icons";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/context/AuthContext";
@@ -38,8 +39,19 @@ export function LoginPage() {
 
   return (
     <AuthLayout>
-      <h2 className="text-lg font-semibold text-slate-900">Log in</h2>
-      <p className="mt-1 text-sm text-slate-500">Access your revision plan.</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">Welcome back</p>
+      <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900">
+        Log in to your account
+      </h2>
+      <p className="mt-1.5 text-sm text-slate-500">
+        Pick up right where you left off in your revision plan.
+      </p>
+
+      {error && (
+        <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-xs font-medium text-rose-700">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <Input
@@ -49,7 +61,7 @@ export function LoginPage() {
           value={identifier}
           onChange={(event) => setIdentifier(event.target.value)}
           placeholder="you@example.com"
-          error={error ?? undefined}
+          icon={<MailIcon width={16} height={16} />}
         />
         <Input
           label="Password"
@@ -58,18 +70,24 @@ export function LoginPage() {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="••••••••"
+          icon={<LockIcon width={16} height={16} />}
         />
-        {error && <p className="text-xs text-rose-600">{error}</p>}
 
-        <Button type="submit" loading={submitting} className="w-full">
+        <div className="flex items-center justify-end">
+          <a href="#" className="text-xs font-medium text-brand-600 hover:text-brand-700">
+            Forgot password?
+          </a>
+        </div>
+
+        <Button type="submit" size="lg" loading={submitting} className="w-full">
           Log in
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-slate-500">
         New here?{" "}
-        <Link to="/register" className="font-medium text-brand-600 hover:text-brand-700">
-          Create an account
+        <Link to="/register" className="font-semibold text-brand-600 hover:text-brand-700">
+          Create a free account
         </Link>
       </p>
     </AuthLayout>

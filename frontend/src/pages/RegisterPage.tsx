@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthLayout } from "@/components/layout/AuthLayout";
+import { LockIcon, MailIcon } from "@/components/layout/icons";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/context/AuthContext";
@@ -63,8 +64,21 @@ export function RegisterPage() {
 
   return (
     <AuthLayout>
-      <h2 className="text-lg font-semibold text-slate-900">Create your account</h2>
-      <p className="mt-1 text-sm text-slate-500">Start planning your revision today.</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
+        Get started
+      </p>
+      <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900">
+        Create your account
+      </h2>
+      <p className="mt-1.5 text-sm text-slate-500">
+        Start planning your revision in under a minute — it's free.
+      </p>
+
+      {error && (
+        <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-xs font-medium text-rose-700">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <Input
@@ -89,6 +103,7 @@ export function RegisterPage() {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="you@example.com"
+          icon={<MailIcon width={16} height={16} />}
         />
         <Input
           label="Password"
@@ -97,6 +112,7 @@ export function RegisterPage() {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="At least 8 characters"
+          icon={<LockIcon width={16} height={16} />}
         />
         <Input
           label="Confirm password"
@@ -105,17 +121,17 @@ export function RegisterPage() {
           value={confirm}
           onChange={(event) => setConfirm(event.target.value)}
           placeholder="••••••••"
+          icon={<LockIcon width={16} height={16} />}
         />
-        {error && <p className="text-xs text-rose-600">{error}</p>}
 
-        <Button type="submit" loading={submitting} className="w-full">
+        <Button type="submit" size="lg" loading={submitting} className="w-full">
           Create account
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-slate-500">
         Already have an account?{" "}
-        <Link to="/login" className="font-medium text-brand-600 hover:text-brand-700">
+        <Link to="/login" className="font-semibold text-brand-600 hover:text-brand-700">
           Log in
         </Link>
       </p>
