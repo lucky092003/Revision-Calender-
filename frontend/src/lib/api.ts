@@ -3,7 +3,7 @@ import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 export const TOKEN_KEY = "revision_calendar_token";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api",
+  baseURL: import.meta.env.VITE_API_URL || "https://revision-calender.onrender.com/api",
   headers: { "Content-Type": "application/json" },
 });
 
