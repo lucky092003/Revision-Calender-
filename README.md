@@ -17,9 +17,8 @@ and the app automatically generates a revision schedule (Day 1, 3, 7, 15, 30, 90
 - **Search & filters** – by name, subject, difficulty, status; sorted by study date / next revision
 - **Auth** – register, login, logout with JWT; every user's data is private
 
-This repository currently implements **Phase 1** (project setup, database, authentication,
-Add Topic, topic listing). Later phases add the calendar, dashboard, today's revision page,
-search refinement and polish.
+All features are fully implemented across the dashboard, calendar, today's revision page,
+topic management, search/filtering and authentication.
 
 ## 2. Tech stack
 
@@ -222,10 +221,24 @@ revision schedule appear.
 | GET    | `/api/revisions/calendar?year=&month=` | Revisions per day for a month |
 | POST   | `/api/revisions/{id}/complete`    | Mark a revision completed |
 
-## 12. Roadmap
+## 12. Deployment
+
+Quick guide to making the app live:
+
+1. **Database** – create a free project at [supabase.com](https://supabase.com), copy the
+   **Session pooler** connection string and set it in `backend/.env` as `DATABASE_URL`.
+2. **Backend** – deploy `backend/` to Render, Railway or Fly.io (Python + uvicorn).
+   Start command: `uvicorn app.main:app --host 0.0.0.0 --port 8000`.
+   Env vars: `DATABASE_URL`, `JWT_SECRET`, `AUTO_CREATE_TABLES=true`,
+   `BACKEND_CORS_ORIGINS=https://<your-frontend-url>`.
+3. **Frontend** – deploy `frontend/` to Vercel or Netlify. Set
+   `VITE_API_URL=https://<your-backend-url>/api`, build command `npm run build`,
+   output directory `dist`.
+
+## 13. Roadmap
 
 - **Phase 1 (done):** setup, database, auth, add topic, topic listing
-- **Phase 2:** today's revision queue, revision status polish
-- **Phase 3:** monthly calendar + calendar interactions
-- **Phase 4:** dashboard with charts, streak, progress
+- **Phase 2 (done):** today's revision queue, revision status polish
+- **Phase 3 (done):** monthly calendar + calendar interactions
+- **Phase 4 (done):** dashboard with charts, streak, progress
 - **Phase 5:** comprehensive testing, error handling, responsive polish
