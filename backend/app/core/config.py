@@ -23,11 +23,15 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
 
-    BACKEND_CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    BACKEND_CORS_ORIGINS: str = "*"
 
     @property
     def cors_origins_list(self) -> list[str]:
         return [origin.strip() for origin in self.BACKEND_CORS_ORIGINS.split(",") if origin.strip()]
+
+    @property
+    def cors_allow_all(self) -> bool:
+        return any(origin in ("*", "") for origin in self.cors_origins_list)
 
 
 @lru_cache
