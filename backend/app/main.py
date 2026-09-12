@@ -22,10 +22,14 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# Auth uses Bearer tokens (not cookies), so credentials are not required.
+# The CORS spec forbids wildcard origins together with credentials, so when
+# all origins are allowed we disable credentials to keep the wildcard valid.
+_cors_allow_all = settings.cors_allow_all
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
-    allow_credentials=True,
+    allow_origins=["*"] if _cors_allow_all else settings.cors_origins_list,
+    allow_credentials=not _cors_allow_all,
     allow_methods=["*"],
     allow_headers=["*"],
 )
